@@ -3,59 +3,74 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
-    sf::Texture texture;
-    // no repetation
-    texture.setRepeated(false);
 
-    //    loading the car image
-    if (!texture.loadFromFile("car.png"))
-    {
-        std::cout << "Error in loading the page " << std::endl;
-    }
-    sf::Sprite sprite(texture);
+// circle
+// sf::CircleShape circle(150);
+// circle.setFillColor(sf::Color::Blue);//color of the circle 
+// circle.setOutlineThickness(10);
 
-    // positive number in x axis goes right for y down
-    sprite.setOrigin(sf::Vector2f(sprite.getTexture()->getSize().x * 0.5, sprite.getTexture()->getSize().y * 0.5));
+// triangle
+// sf::CircleShape polygon(300,3);
 
-    // setting up the car position
-    sprite.setTextureRect(sf::IntRect(0, 0, 100, 200));
+// polygon
+// sf::CircleShape polygon(300,4);
+// sf::CircleShape polygon(300,8);
 
-    // setting up the car color
-    sprite.setColor(sf::Color(255, 0, 0));
+// convex shape
+// sf::ConvexShape shape;
+// shape.setPointCount(6);
+// shape.setPoint(0,sf::Vector2f(40,70));
+// shape.setPoint(1,sf::Vector2f(60,70));
+// shape.setPoint(2,sf::Vector2f(200,200));
+// shape.setPoint(3,sf::Vector2f(350,300));
+// shape.setPoint(4,sf::Vector2f(300,450));
+// shape.setPoint(5,sf::Vector2f(320,500));
 
-    // setting up the sprite position
-    sprite.setPosition(sf::Vector2f(300, 200));
+// drawing the line 
+// sf::RectangleShape line;
+// line.setSize(sf::Vector2f(200,3));
+// sf::Vertex line2[]=
+// {
+//   sf::Vertex(sf::Vector2f(25,10)),
+//   sf::Vertex(sf::Vector2f(400,100))
 
-    // getting the sprite postion
-    std::cout << "the x postion of the sprite is " << sprite.getPosition().x << std::endl;
-    std::cout << "the y postion of the sprite is " << sprite.getPosition().y << std::endl;
-
-
-
-    // rotation of the car
-    // sprite.setRotation(45);
-    // sprite.rotate(15);
-
-
-
-    // setting up the scale 
-    // sprite.setScale(sf::Vector2f(1,1));
-    // sprite.scale(sf::Vector2f(1,1.3))
+// };
 
 
 
 
+// texture 
+// sf::Texture texture;
 
+// if(!texture.loadFromFile("car.png")){
+//     std::cout<<"ERROR ERROR AND ERROR"<<std::endl;
+// }
 
-
-
-
+// circle.setTexture(&texture);
+// circle.setTextureRect(sf::IntRect(0,0,20,45));
 
 
 
 
 
-     
+// drawing using the vertex point 
+
+sf::Vertex point;
+
+point.position=sf::Vector2f(300,400);
+point.color=sf::Color::Red;
+sf::VertexArray line(sf::Lines,2);
+line[0].position=sf::Vector2f(200,150);
+line[0].color=sf::Color::Red;
+
+line[1].position=sf::Vector2f(400,90);
+line[1].color=sf::Color::Green;
+
+
+
+
+
+
 
     while (window.isOpen())
     {
@@ -66,61 +81,19 @@ int main()
             {
             case sf::Event::Closed:
                 window.close();
-                break;
-            case sf::Event::KeyPressed:
-                std::cout << "key pressed";
-                // particulaar key pressed
-                switch (event.key.code)
-                {
-                case sf::Keyboard::Up:
-                if(sprite.getPosition().y>100){
-                    sprite.move(sf::Vector2f(0, -10));
-
-                }
-                    std::cout << "the x postion of the sprite is " << sprite.getPosition().x << std::endl;
-                    std::cout << "the y postion of the sprite is " << sprite.getPosition().y << std::endl;
-                    break;
-                case sf::Keyboard::Down:
-                         if(sprite.getPosition().y<510){
-                    sprite.move(sf::Vector2f(0, 10));
-
-                }
-                    std::cout << "key A is pressed";
-                    std::cout << "the x postion of the sprite is " << sprite.getPosition().x << std::endl;
-                    std::cout << "the y postion of the sprite is " << sprite.getPosition().y << std::endl;
-                    // window.close();
-                    break;
-                case sf::Keyboard::Left:
-                  
-                       if (sprite.getPosition().x > 100)
-                    {
-                        sprite.move(sf::Vector2f(-100, 0));
-                    }
-                    std::cout << "key A is pressed";
-                    std::cout << "the x postion of the sprite is " << sprite.getPosition().x << std::endl;
-                    std::cout << "the y postion of the sprite is " << sprite.getPosition().y << std::endl;
-                    // window.close();
-                    break;
-                case sf::Keyboard::Right:
-                    if (sprite.getPosition().x < 500)
-                    {
-                        sprite.move(sf::Vector2f(100, 0));
-                    }
-                    std::cout << "key A is pressed";
-                    std::cout << "the x postion of the sprite is " << sprite.getPosition().x << std::endl;
-                    std::cout << "the y postion of the sprite is " << sprite.getPosition().y << std::endl;
-                    // window.close();
-                    break;
-
-
-
-                }
-                break;
+                break;        
+               
             }
 
             window.clear();
-            window.draw(sprite);
+            // window.draw(circle);
+            // window.draw(polygon);
+            // window.draw(shape);
+            // window.draw(line2,2,sf::Lines);
+            window.draw(line);
+
             window.display();
+
         }
     }
     return 0;
