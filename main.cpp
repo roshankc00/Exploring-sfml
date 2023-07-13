@@ -1,72 +1,74 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(600, 600), "Car game !");
 
-// circle
-// sf::CircleShape circle(150);
-// circle.setFillColor(sf::Color::Blue);//color of the circle 
-// circle.setOutlineThickness(10);
-
-// triangle
-// sf::CircleShape polygon(300,3);
-
-// polygon
-// sf::CircleShape polygon(300,4);
-// sf::CircleShape polygon(300,8);
-
-// convex shape
-// sf::ConvexShape shape;
-// shape.setPointCount(6);
-// shape.setPoint(0,sf::Vector2f(40,70));
-// shape.setPoint(1,sf::Vector2f(60,70));
-// shape.setPoint(2,sf::Vector2f(200,200));
-// shape.setPoint(3,sf::Vector2f(350,300));
-// shape.setPoint(4,sf::Vector2f(300,450));
-// shape.setPoint(5,sf::Vector2f(320,500));
-
-// drawing the line 
-// sf::RectangleShape line;
-// line.setSize(sf::Vector2f(200,3));
-// sf::Vertex line2[]=
-// {
-//   sf::Vertex(sf::Vector2f(25,10)),
-//   sf::Vertex(sf::Vector2f(400,100))
-
-// };
+ sf::Sprite background;
+ sf::Texture texture;
+ sf::View view(sf::FloatRect(0,0,1500,1500));
+  if (!texture.loadFromFile("road.png"))
+    {
+        std::cout << "Error Error and Error " << std::endl;
+    }
+    background.setTexture(texture);
+      background.setPosition(sf::Vector2f(100, 150));
 
 
+    //  moving the view 
+    // view.move (sf::Vector2f(50,100));
+    // setting the view to the center 
+    // view.setCenter(sf::Vector2f(300,300));
+
+    // rotating the view 
+    // view.rotate(25); 
+
+    // scaling rhe view 
+    // view.zoom(0.5f);
+    // according from original size
+    // view.setSize(sf::Vector2f(400,200));
+
+    // Resiging the view with window 
+    window.setView(view);
 
 
-// texture 
-// sf::Texture texture;
+// playing the sound effect
+// sf::SoundBuffer buffer;
+// if(!buffer.loadFromFile("town-10169.mp3")){
+//     std::cout<<"music not found :)"<<std::endl;
 
-// if(!texture.loadFromFile("car.png")){
-//     std::cout<<"ERROR ERROR AND ERROR"<<std::endl;
+// }
+// sf::Sound sound;
+// sound.setBuffer(buffer);
+// sound.play();
+
+
+
+
+// playing the music 
+// sf::Music music;
+// if(!music.openFromFile("town-10169.mp3")){
+//     std::cout<<"ERROR ERROR :"<<std::endl;
 // }
 
-// circle.setTexture(&texture);
-// circle.setTextureRect(sf::IntRect(0,0,20,45));
+// music.play();
+
+// // extra functionality
+// music.setPlayingOffset(sf::seconds(10));
+// music.setVolume(23);
 
 
 
 
+// Recording the sound 
+if(!sf::SoundBufferRecorder::isAvailable()){
+    std::cout<<"not recordeed :)"<<std::endl;
 
-// drawing using the vertex point 
+}
 
-sf::Vertex point;
-
-point.position=sf::Vector2f(300,400);
-point.color=sf::Color::Red;
-sf::VertexArray line(sf::Lines,2);
-line[0].position=sf::Vector2f(200,150);
-line[0].color=sf::Color::Red;
-
-line[1].position=sf::Vector2f(400,90);
-line[1].color=sf::Color::Green;
-
-
+sf::SoundBufferRecorder recorder;
+recorder.start();
 
 
 
@@ -81,16 +83,22 @@ line[1].color=sf::Color::Green;
             {
             case sf::Event::Closed:
                 window.close();
-                break;        
+                break;  
+            // case sf::Event::Resized:
+            // sf::FloatRect visibleArea(0,0,event.size.width,event.size.height)  ;   
+            // window.setView(sf::View());
+            // break;
+            case sf::Event::KeyPressed:
+            recorder.stop();
+            const sf::SoundBuffer &buffer=recorder.getBuffer();
+            buffer.saveToFile("roshan.ogg");
+
+              break;
                
             }
 
             window.clear();
-            // window.draw(circle);
-            // window.draw(polygon);
-            // window.draw(shape);
-            // window.draw(line2,2,sf::Lines);
-            window.draw(line);
+            window.draw(background);    
 
             window.display();
 
